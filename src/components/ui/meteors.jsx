@@ -11,7 +11,7 @@ export const Meteors = ({
   useEffect(() => {
     const styles = [...new Array(number || 20)].map(() => ({
       top: -5,
-      left: Math.floor(Math.random() * (400 - -400) + -400) + "px",
+      left: Math.floor(Math.random() * (400 - -400) + -400) + "px", 
       animationDelay: Math.random() * (0.8 - 0.2) + 0.2 + "s",
       animationDuration: Math.floor(Math.random() * (10 - 2) + 2) + "s",
     }));
@@ -19,7 +19,9 @@ export const Meteors = ({
   }, [number]);
 
   return (
-    <>
+    // FIX: Set a minimum height (min-h-[400px]) so the platform has space to show at the bottom.
+    // Replace min-h-[400px] with h-full if the PARENT element defines the height.
+    <div className="relative w-full min-h-[400px] overflow-hidden"> 
       {[...meteorStyles].map((style, idx) => (
         // Meteor flight path
         <span
@@ -34,6 +36,10 @@ export const Meteors = ({
           {/* Meteor tail */}
         </span>
       ))}
-    </>
+      
+      {/* PURPLE PLATFORM ADDITION (z-index is key to ensure visibility) */}
+      <div className="absolute bottom-0 left-0 w-full h-10 bg-purple-700/80 backdrop-blur-sm shadow-inner shadow-purple-900/50 z-10" />
+      <div className="absolute bottom-10 left-0 w-full h-0.5 bg-gradient-to-t from-purple-700/50 to-transparent z-10" />
+    </div>
   );
 };

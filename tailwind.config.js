@@ -19,7 +19,13 @@ export default {
           },
         },
       },
+      // Note: No 'backdropFilter' needed here, it comes from the plugins
     },
   },
-  plugins: [],
+  plugins: [
+    // 💡 ADD THESE PLUGINS 💡
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    // Note: 'require' works fine even with 'export default' for modules.
+  ],
 }

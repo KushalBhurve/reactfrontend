@@ -157,33 +157,36 @@ export function PlaceholdersAndVanishInput({
 
       const value = inputRef.current?.value || "";
       if (value && inputRef.current) {
-         const maxX = newDataRef.current.reduce((prev, current) => (current.x > prev ? current.x : prev), 0);
-         animate(maxX);
+          const maxX = newDataRef.current.reduce((prev, current) => (current.x > prev ? current.x : prev), 0);
+          animate(maxX);
       }
-   };
+    };
 
-   const handleSubmit = (e) => {
-      e.preventDefault();
-    
-    // 💡 CHANGE 1: Get the value before calling vanishAndSubmit, 
-    // which starts the animation that eventually clears `value`.
-    const submittedValue = inputRef.current?.value || ""; 
-    
-      vanishAndSubmit();
-    
-    // 💡 CHANGE 2: Pass the actual submitted value to the parent's onSubmit.
-      onSubmit && onSubmit(submittedValue); // <-- Changed from onSubmit(e) to onSubmit(submittedValue)
-   };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+      
+        // 💡 CHANGE 1: Get the value before calling vanishAndSubmit, 
+        // which starts the animation that eventually clears `value`.
+        const submittedValue = inputRef.current?.value || ""; 
+      
+        vanishAndSubmit();
+      
+        // 💡 CHANGE 2: Pass the actual submitted value to the parent's onSubmit.
+        onSubmit && onSubmit(submittedValue); // <-- Changed from onSubmit(e) to onSubmit(submittedValue)
+      };
+      
   return (
     <form
       className={cn(
-        "w-full relative max-w-xl mx-auto bg-white dark:bg-zinc-800 h-12 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200",
+        // --- START: Removed max-w-xl and mx-auto here ---
+        "w-full relative bg-white dark:bg-zinc-800 h-12 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200",
+        // --- END: Removed max-w-xl and mx-auto here ---
         value && "bg-gray-50"
       )}
       onSubmit={handleSubmit}>
       <canvas
         className={cn(
-          "absolute pointer-events-none  text-base transform scale-50 top-[20%] left-2 sm:left-8 origin-top-left filter invert dark:invert-0 pr-20",
+          "absolute pointer-events-none  text-base transform scale-50 top-[20%] left-2 sm:left-8 origin-top-left filter invert dark:invert-0 pr-20",
           !animating ? "opacity-0" : "opacity-100"
         )}
         ref={canvasRef} />
